@@ -1,26 +1,46 @@
-In our project, we've utilized the DWD Weather Data East Germany API to access accurate and up-to-date meteorological data from the eastern region of Germany. 
-This API offers detailed information on weather conditions such as temperature, precipitation, wind speed, and more. 
-By integrating this API into our project, we were able to obtain reliable data to enhance the accuracy and functionality of our applications or analyses related to weather in this specific area.
+# Weather Data and Accident Prediction Project
 
-Observations:
-From the entire dataset, we will only need a few variables from 2021, as the dataset you provided us with was from 2021 and it would make sense to use that.
+## Project Overview
 
-When analyzing the 2021 data, we observe that we have few variables with values. Therefore, we will use those that make the most sense for our study. In our case, we will use 'sunshine' and 'precipitation'.
-The entire process to obtain meaningful data is explained in the code (Data4Good_1.ipynb).
+In this project, we utilize the **DWD Weather Data East Germany API** to access accurate and up-to-date meteorological data for eastern Germany. This API provides detailed weather information such as temperature, precipitation, wind speed, and more. Integrating this API enhances the accuracy and functionality of our applications or analyses related to weather in this region.
 
-On the other hand, (Dataprepatation.ipynb) we merged datasets, removed uninteresting variables, and focused on a subset of the input data. In Particular, we analyzed accidents that occurred near the sensors in Berlin.
-Once we merge all the CSV files, we can start analyzing them. On one hand, we've developed a Deep Learning model where we employ an MLP to predict accident probabilities. We're using the sigmoid activation function since we're interested in values between 0 and 1.
+## Data Utilization
 
-To build this neural network, we encountered many dimensionality issues. Typically, inputs have the same dimensions, but in our case, they do not. Therefore, we had to follow a logic to generate meaningful dimensions that do not affect the final value. 
-To train the data, we need to perform forward and backpropagation, where we then calculate the loss function. We've used Binary Cross Entropy to classify the labels in a binary manner. However, we've used PyTorch, which is a Python library that helps us perform calculations very efficiently and internally computes backpropagation, so we don't have to worry about it. This makes it very useful as neural networks start to increase in complexity.
+### Observations
+From the dataset provided, we focus on variables from 2021, as it aligns with the dataset's time frame. Specifically, we have observed that only a few variables have values. Therefore, we use the most relevant ones for our study: **'sunshine'** and **'precipitation'**. The process for obtaining meaningful data is detailed in the code `Data4Good_1.ipynb`.
 
-Once we have all the probabilities (predicted values by Neural Net), we can create various applications. In our case, we have developed a Python script that takes the accident probabilities. 
-These probabilities are linked to the coordinates of Berlin with latitude and longitude, so we can relate them to the distance to accident sensors. With this, we can establish a relationship between accident intensity and frequency and create a heatmap.
+### Data Preparation
+In `Datapreparation.ipynb`, we:
+- Merged datasets
+- Removed irrelevant variables
+- Focused on a subset of the input data, specifically accidents near sensors in Berlin
 
-Thanks to an API, we've created an interactive graphical interface that allows zooming to view areas with a higher probability of accidents at that moment.
-With this, we'll be able to redirect people/drivers when there's a certain risk of accidents.
+## Deep Learning Model
 
-To be usable in real life, what we have done is create an architecture to make it a real-time system, meaning that data is sent periodically to be executed automatically. This ensures that citizens have up-to-date data and allows us to redirect traffic to reduce the likelihood of accidents. To do this, the structure is based on three sources of information: Police, Sensors, Weather. This is sent to a Kafka Data Broker which will send it to a node to execute Python scripts, the output will go to another Data Broker which will send the result that will be the input for the deep learning model, then this would be sent to another Kafka Data broker, which will send the data to another Python script to create a heatmap of accident probabilities in Berlin which will serve to improve the life of people in Berlin.
+### Model Development
+We developed a Deep Learning model using a **Multilayer Perceptron (MLP)** to predict accident probabilities. The model uses the sigmoid activation function to yield values between 0 and 1. Key steps include:
 
-Finally, we can see that this system allows us to make it scalable to large scales.
+- **Handling Dimensionality Issues**: Adjusted dimensions to ensure they do not affect the final values.
+- **Training**: Performed forward and backpropagation, calculating the loss function using Binary Cross Entropy. PyTorch was utilized for efficient computation and automatic backpropagation.
+
+### Analysis and Application
+Once we have the predicted probabilities:
+- **Python Script**: Created to associate accident probabilities with coordinates (latitude and longitude) in Berlin.
+- **Heatmap Creation**: Developed an interactive graphical interface to visualize accident probabilities, allowing zooming and highlighting high-risk areas.
+
+## Real-Time System Architecture
+
+To ensure real-time usability, we designed a system architecture that:
+- Periodically sends data for automatic execution
+- Integrates three information sources: **Police**, **Sensors**, **Weather**
+- Uses **Kafka Data Brokers** to manage data flow between Python scripts and the deep learning model
+- Generates a heatmap of accident probabilities to improve safety and traffic management in Berlin
+
+## Scalability
+The system is designed to be scalable, capable of handling large volumes of data and adapting to various scales of application.
+
+## Conclusion
+This project demonstrates the potential of combining weather data and deep learning to enhance traffic safety through real-time prediction and visualization. We hope these resources and tools will be valuable for those interested in similar data mining and predictive analytics applications.
+
+Happy exploring!
 
